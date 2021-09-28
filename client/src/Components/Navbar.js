@@ -32,7 +32,7 @@ const NavBar = () => {
   return (
     <Menu>
       <Link to='/'><Menu.Item active={location.pathname == "/"}>Home</Menu.Item></Link>
-      <Link to='/things'><Menu.Item active={location.pathname == "/things"}>Things</Menu.Item></Link>
+      <Link to='/products'><Menu.Item active={location.pathname == "/products"}>Products</Menu.Item></Link>
       <Menu.Menu position="right">
         {rightNavItems()}
       </Menu.Menu>
