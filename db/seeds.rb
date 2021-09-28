@@ -8,17 +8,17 @@
 Seller.destroy_all
 Buyer.destroy_all
 
-categoryArr = ['Home', 'Garden', 'Outdoor', 'Electronics', 'Jewelry']
+categoryArr = ['Desserts', 'Gourmet Appetizers', 'Entrees', 'Candy', 'Freeze Dried']
 
 require 'faker'
 
 10.times do 
   s = Seller.create(name:Faker::Name.name, email:Faker::Internet.email)
-  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
-  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
-  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
-  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
-  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
   10.times do 
     b = Buyer.create(name:Faker::Name.name, max_price:Faker::Commerce.price(range:5..15), desired_category:categoryArr.sample, seller_id:s.id)
   end
