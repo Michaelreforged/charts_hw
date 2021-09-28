@@ -5,3 +5,27 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Seller.destroy_all
+Buyer.destroy_all
+
+categoryArr = ['Home', 'Garden', 'Outdoor', 'Electronics', 'Jewelry']
+
+require 'faker'
+
+10.times do 
+  s = Seller.create(name:Faker::Name.name, email:Faker::Internet.email)
+  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  s.products.create(price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
+  10.times do 
+    b = Buyer.create(name:Faker::Name.name, max_price:Faker::Commerce.price(range:5..15), desired_category:categoryArr.sample, seller_id:s.id)
+  end
+end
+
+
+puts Seller.all.length 
+puts Buyer.all.length 
+puts Product.all.length 
+
