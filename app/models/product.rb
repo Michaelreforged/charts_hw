@@ -13,6 +13,30 @@ class Product < ApplicationRecord
     .order('p.price ASC')
   end
 
+# SELECT DISTINCT p.seller_id, s.name
+# FROM products AS p
+# INNER JOIN sellers AS s ON p.seller_id = s.id
+
+  def self.sellers
+    select('DISTINCT p.seller_id, s.name')
+    .from('products AS p')
+    .joins('INNER JOIN sellers AS s ON p.seller_id = s.id')
+  end
+  
+# SELECT DISTINCT p.seller_id, s.name AS seller_name, p.name, p.price, p.description, p.category
+# FROM products AS p
+# INNER JOIN sellers AS s ON p.seller_id = s.id
+# WHERE LOWER(s.name) = 'jerry schowalter' 
+
+  def self.by_sellers(seller)
+    select('DISTINCT p.seller_id, p.name, p.price, p.description, p.category')
+    .from('products AS p')
+    .joins('INNER JOIN sellers AS s ON p.seller_id = s.id')
+    .where('s.id = ? ', seller)
+    .order('p.price ASC')
+  end
+
+
 end
 # SELECT  p.name, p.category, p.description, p.seller_id, p.id, p.price, s.name AS seller_name
 # FROM products AS p

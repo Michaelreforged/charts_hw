@@ -13,7 +13,7 @@ categoryArr = ['Desserts', 'Gourmet Appetizers', 'Entrees', 'Candy', 'Freeze Dri
 require 'faker'
 
 10.times do 
-  s = Seller.create(name:Faker::Name.name, email:Faker::Internet.email)
+  s = Seller.create(name:Faker::Games::SuperSmashBros.fighter, email:Faker::Internet.email)
   s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
   s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
   s.products.create(name:Faker::Food.dish, price:Faker::Commerce.price(range:5..15), description:Faker::Food.description, category:categoryArr.sample, seller_id: s.id)
