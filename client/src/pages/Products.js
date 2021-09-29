@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List, Table } from 'semantic-ui-react';
+import { Image, List, Table } from 'semantic-ui-react';
 
 function Products(props) {
   const [info, setInfo] = useState([])
-  const [seller, setSeller] = useState([])
-  const [product, setProduct] = useState([])
 
   useEffect(()=>{
     getInfo()
@@ -14,38 +12,29 @@ function Products(props) {
   const getInfo = async () => {
     try {
       let res = await axios.get('/api/products')
-      console.log(res)
-      setInfo(res.data)
+      setInfo(normalizeInfo(res.data))
     } catch (error) {
       console.log("error getting Products", error)
     }
   }
 
-  const normalizeInfo = () =>{
-
-    
-    // let seller = info.map((s)=>{
-    //   let name = s.seller_name
-    //   let products = {name: s.name, price: s.price, description: s.description, category: s.category}
-    //   // return {seller:name, products: products}
-    // })
-
-    // Format we want info in
-    // const seller = [
-    //   {
-    //     name: "Tony",
-    //     email: "test@test.com",
-    //     products: [
-    //       {name: lasgna, price: 123, description: 1, category: 2},
-    //       {
-    //         name: rice,
-    //         price: 1223423,
-    //         beds: 1,
-    //       },
-    //     ],
-    //   }
-    // ]
-
+  const normalizeInfo = (data) =>{
+    let ids =  data.map((s)=> s.seller_id);
+    let unique_seller = [... new Set(ids)];
+    return unique_seller.map((id) => {
+      let products = data.filter((p) => p.seller_id === id)
+      let {sellers_name, email} = products[0];
+      let sellersProducts = products.map((p) =>{
+        return{
+          name: p.name,
+          price: p.price,
+          description: p.description, 
+          category: p.category,
+          productID: p.product_id
+        };
+      });
+      return {sellers_name, email, products: sellersProducts}    
+    });
   }
 
   const renderProducts = (products) => {
@@ -62,13 +51,16 @@ function Products(props) {
   };
 
   const renderList = () => {
-    return seller.map((s) => {
+    return info.map((s) => {
       return (
         <List.Item>
           <Image
             avatar
             src="https://react.semantic-ui.com/images/avatar/small/molly.png"
           />
+          <List.Header>
+            {s.sellers_name}
+          </List.Header>
           <List.Content>
             <List.Content>{s.name}</List.Content>
           </List.Content>
@@ -92,14 +84,13 @@ function Products(props) {
 
 
   return (
-    <div> Products </div>
-    // <List
-    //   divided
-    //   verticalAlign="middle"
-    //   style={{ border: "1px solid", padding: "10px " }}
-    // >
-    //   {renderList()}
-    // </List>
+    <List
+      divided
+      verticalAlign="middle"
+      style={{ border: "1px solid", padding: "10px " }}
+    >
+      {renderList()}
+    </List>
   );
 };
 
