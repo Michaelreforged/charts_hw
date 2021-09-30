@@ -21,7 +21,6 @@ const FindProduct = () => {
     }
   }
 
-
   const getSellers = async () => {
     try{
       let res = await axios.get('/api/products/sellers')
@@ -62,9 +61,6 @@ const FindProduct = () => {
       </div>
     )
   }
-
-  
-
 
   return (
     <>

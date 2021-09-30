@@ -13,6 +13,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
 import FindProduct from './pages/FindProduct';
+import ChartsByCategory from './pages/ChartsByCategory';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route exact path='/' component={Home}/>    
             <Route exact path='/sellers' component={Products}/>
             <Route exact path='/categories' component={Categories}/>
+            <Route exact path='/chartsByCategory' component={ChartsByCategory}/>
             <Route exact path='/find' component={FindProduct}/>
             <Route exact path='/login' component={Login}/>
             <Route exact path='/register' component={Register}/>
