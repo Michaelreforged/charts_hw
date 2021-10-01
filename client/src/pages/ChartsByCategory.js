@@ -1,11 +1,7 @@
 import axios from "axios";
-import { CategoryScale } from "chart.js";
 import React, { useEffect, useState } from "react";
-import context from "react-bootstrap/esm/AccordionContext";
 import {Doughnut} from "react-chartjs-2"
-import { Container, Segment } from "semantic-ui-react";
-import styled from "styled-components";
-import Categories from "./Categories";
+import { Segment } from "semantic-ui-react";
 
 const  ChartsByCategory = () =>{
   const[category, setCategory] = useState([])
