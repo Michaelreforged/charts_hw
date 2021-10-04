@@ -5,6 +5,7 @@ import { Segment } from "semantic-ui-react";
 
 const  ChartBuyerLine = () =>{
   const[info, setInfo] = useState([])
+  const[loaded, setLoaded] = useState(false)
   
   useEffect(()=>{
     getInfo();
@@ -12,40 +13,38 @@ const  ChartBuyerLine = () =>{
 
   const getInfo = async () => {
     try {
-      let res = await axios.get("/api/sellers/chart_by_category")
-      console.log(res)
+      let res = await axios.get("/api/buyers/category_price_avg")
       setInfo(normalizData(res.data))
     } catch (error) {
       console.log(error)
+    } finally{
+      setLoaded(true)
     }
   }
   
   const normalizData = (data) => {
-    let cate = data.map((c) => c.category)
-    let unique_cate = [... new Set(cate)]
-    return unique_cate.map((catego)=>{
-      let category_items = data.filter((c)=> c.category === catego )
-      let {category} = category_items[0]
-      let nameData = []
-      let countData = []
-      let label = category_items.map((c)=>{
-        let name = c.name 
-        nameData.push(name)
-        let count = c.count
-        countData.push(count)
-      })
-      let normData = {category, nameData, countData}
-      return{normData}
+    let avgPrice = []
+    let countData = []
+    let categoryData = []
+    let label = data.map((c)=>{
+      let desiredCategory = c.desired_category
+      categoryData.push(desiredCategory)
+      let price = c.avg_max 
+      avgPrice.push(price)
+      let count = c.count
+      countData.push(count)
     })
+    let normData = {categoryData, avgPrice, countData}
+    return{normData}
   }
 
-  const mapdata = (cat) => {
+  const mapdata = (data) => {
     return({
-    labels: cat.normData.nameData,
+    labels: data.normData.categoryData,
     datasets: [
       {
-        label: '# of Votes',
-        data: cat.normData.countData,
+        label: 'Average Price',
+        data: data.normData.avgPrice,
         backgroundColor: [
           'rgba(131, 188, 212, 0.2)',
           'rgba(164, 209, 224, 0.2)',
@@ -68,21 +67,16 @@ const  ChartBuyerLine = () =>{
   };
 
   const mapCharts = () =>{
-    return info.map((cat)=>{
-      console.log(cat);
-      return(
+    return(
       <div style={{width:"25vw"}}>
         <Segment >
           <div className='header'>
-            <h1 className='title'>{cat.normData.category}</h1>
-            <h1 className='title'>By Seller</h1>
+            <h1 className='title'>Average max price by Category</h1>
           </div>
-          <Line 
-          data={mapdata(cat)} />
+          {loaded && <Line 
+          data={mapdata(info)}/>}
       </Segment>
-    </div>
-    )
-    })
+    </div>)
   }
     
   return(
