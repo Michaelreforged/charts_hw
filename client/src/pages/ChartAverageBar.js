@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {Doughnut} from "react-chartjs-2"
+import {Bar} from "react-chartjs-2"
 import { Segment } from "semantic-ui-react";
 
-const  ChartsByCategory = () =>{
+const  ChartAverageBar = () =>{
   const[info, setInfo] = useState([])
   
   useEffect(()=>{
@@ -14,13 +14,13 @@ const  ChartsByCategory = () =>{
     try {
       let res = await axios.get("/api/sellers/chart_by_category")
       console.log(res)
-      setInfo(normalizData(res.data))
+      setInfo(normalizedData(res.data))
     } catch (error) {
       console.log(error)
     }
   }
   
-  const normalizData = (data) => {
+  const normalizedData = (data) => {
     let cate = data.map((c) => c.category)
     let unique_cate = [... new Set(cate)]
     return unique_cate.map((catego)=>{
@@ -44,7 +44,7 @@ const  ChartsByCategory = () =>{
     labels: cat.normData.nameData,
     datasets: [
       {
-        label: '# of Votes',
+        label: '# of Seller',
         data: cat.normData.countData,
         backgroundColor: [
           'rgba(131, 188, 212, 0.2)',
@@ -86,7 +86,7 @@ const  ChartsByCategory = () =>{
             <h1 className='title'>{cat.normData.category}</h1>
             <h1 className='title'>By Seller</h1>
           </div>
-          <Doughnut 
+          <Bar 
           data={mapdata(cat)} />
       </Segment>
     </div>
@@ -96,7 +96,7 @@ const  ChartsByCategory = () =>{
     
   return(
     <>
-    <h1>Donut charts</h1> 
+    <h1>Bar charts</h1> 
     <div className="chart-container" style={
       {display:"flex",
       flexWrap:"wrap",
@@ -107,4 +107,4 @@ const  ChartsByCategory = () =>{
     </>
   )
 }
-export default ChartsByCategory
+export default ChartAverageBar

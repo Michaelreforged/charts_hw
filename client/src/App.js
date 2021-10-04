@@ -14,6 +14,9 @@ import Products from './pages/Products';
 import Categories from './pages/Categories';
 import FindProduct from './pages/FindProduct';
 import ChartsByCategory from './pages/ChartsByCategory';
+import ChartAverageBar from './pages/ChartAverageBar';
+import ChartBuyerLine from './pages/ChartBuyerLine';
+import ChartSellerPie from './pages/ChartSellerPie';
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
             <Route exact path='/sellers' component={Products}/>
             <Route exact path='/categories' component={Categories}/>
             <Route exact path='/chartsByCategory' component={ChartsByCategory}/>
+            <Route exact path='/chartBar' component={ChartAverageBar}/>
+            <Route exact path='/chartLine' component={ChartBuyerLine}/>
+            <Route exact path='/chartPie' component={ChartSellerPie}/>
             <Route exact path='/find' component={FindProduct}/>
             <Route exact path='/login' component={Login}/>
             <Route exact path='/register' component={Register}/>

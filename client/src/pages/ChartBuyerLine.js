@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {Doughnut} from "react-chartjs-2"
+import {Doughnut, Line} from "react-chartjs-2"
 import { Segment } from "semantic-ui-react";
 
-const  ChartsByCategory = () =>{
+const  ChartBuyerLine = () =>{
   const[info, setInfo] = useState([])
   
   useEffect(()=>{
@@ -86,7 +86,7 @@ const  ChartsByCategory = () =>{
             <h1 className='title'>{cat.normData.category}</h1>
             <h1 className='title'>By Seller</h1>
           </div>
-          <Doughnut 
+          <Line 
           data={mapdata(cat)} />
       </Segment>
     </div>
@@ -96,15 +96,17 @@ const  ChartsByCategory = () =>{
     
   return(
     <>
-    <h1>Donut charts</h1> 
+    <h1>Line Charts</h1>
     <div className="chart-container" style={
-      {display:"flex",
-      flexWrap:"wrap",
-      justifyContent: "space-around",
-      position: "relative",
-      height:"40vh", 
-    }} >{mapCharts()}</div>
-    </>
+    {display:"flex",
+    flexWrap:"wrap",
+    justifyContent: "space-around",
+    position: "relative",
+    height:"40vh", 
+    }}>
+      {mapCharts()}
+      </div>
+  </>
   )
 }
-export default ChartsByCategory
+export default ChartBuyerLine
