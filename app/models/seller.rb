@@ -16,4 +16,18 @@ class Seller < ApplicationRecord
     .order('category asc')
   end
 
+  # SELECT s.name, s.id,p.category, AVG(p.price) as avg_price
+  # FROM sellers as s
+  # LEFT JOIN products as p
+  # ON p.seller_id = s.id
+  # GROUP by p.category, s.name, s.id
+  # ORDER BY s.id
+  def self.avg_price_by_category
+    select('s.name, s.id,p.category, AVG(p.price) as avg_price')
+    .from('sellers as s')
+    .joins('LEFT JOIN products as p ON p.seller_id = s.id')
+    .group('p.category, s.name, s.id')
+    .order('s.id')
+  end
+
 end

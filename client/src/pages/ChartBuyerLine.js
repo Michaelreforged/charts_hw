@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {Doughnut, Line} from "react-chartjs-2"
+import { Line } from "react-chartjs-2"
 import { Segment } from "semantic-ui-react";
 
 const  ChartBuyerLine = () =>{
@@ -52,11 +52,7 @@ const  ChartBuyerLine = () =>{
           'rgba(177, 222, 224, 0.2)',
           'rgba(214, 247, 210, 0.2)',
           'rgba(190, 232, 183, 0.2)',
-          'rgba(209, 107, 117, 0.2)',
-          'rgba(237, 126, 126, 0.2)',
-          'rgba(255, 171, 128, 0.2)',
-          'rgba(247, 228, 16, 0.2)',
-          'rgba(255, 253, 191, 0.2)',
+
         ],
         borderColor: [
           'rgba(131, 188, 212, 1)',
@@ -64,11 +60,6 @@ const  ChartBuyerLine = () =>{
           'rgba(177, 222, 224, 1)',
           'rgba(214, 247, 210, 1)',
           'rgba(190, 232, 183, 1)',
-          'rgba(209, 107, 117, 1)',
-          'rgba(237, 126, 126, 1)',
-          'rgba(255, 171, 128, 1)',
-          'rgba(247, 228, 16, 1)',
-          'rgba(255, 253, 191, 1)',
         ],
         borderWidth: 1,
       },

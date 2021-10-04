@@ -12,8 +12,7 @@ const  ChartAverageBar = () =>{
 
   const getInfo = async () => {
     try {
-      let res = await axios.get("/api/sellers/chart_by_category")
-      console.log(res)
+      let res = await axios.get("/api/sellers/average_price")
       setInfo(normalizedData(res.data))
     } catch (error) {
       console.log(error)
@@ -21,31 +20,31 @@ const  ChartAverageBar = () =>{
   }
   
   const normalizedData = (data) => {
-    let cate = data.map((c) => c.category)
-    let unique_cate = [... new Set(cate)]
-    return unique_cate.map((catego)=>{
-      let category_items = data.filter((c)=> c.category === catego )
-      let {category} = category_items[0]
-      let nameData = []
-      let countData = []
-      let label = category_items.map((c)=>{
-        let name = c.name 
-        nameData.push(name)
-        let count = c.count
-        countData.push(count)
+    let sellerID = data.map((c) => c.id)
+    let uniqueSellerID = [... new Set(sellerID)]
+    return uniqueSellerID.map((seller)=>{
+      let seller_items = data.filter((c)=> c.id === seller )
+      let {name} = seller_items[0]
+      let categoryData = []
+      let priceData = []
+      let label = seller_items.map((c)=>{
+        let name = c.category 
+        categoryData.push(name)
+        let avgPrice = c.avg_price
+        priceData.push(avgPrice)
       })
-      let normData = {category, nameData, countData}
+      let normData = {name, categoryData, priceData}
       return{normData}
     })
   }
 
-  const mapdata = (cat) => {
+  const mapdata = (data) => {
     return({
-    labels: cat.normData.nameData,
+    labels: data.normData.categoryData,
     datasets: [
       {
         label: '# of Seller',
-        data: cat.normData.countData,
+        data: data.normData.priceData,
         backgroundColor: [
           'rgba(131, 188, 212, 0.2)',
           'rgba(164, 209, 224, 0.2)',
@@ -77,17 +76,16 @@ const  ChartAverageBar = () =>{
   };
 
   const mapCharts = () =>{
-    return info.map((cat)=>{
-      console.log(cat);
+    return info.map((data)=>{
       return(
-      <div>
+      <div style={{width:"25vw"}}>
         <Segment >
           <div className='header'>
-            <h1 className='title'>{cat.normData.category}</h1>
-            <h1 className='title'>By Seller</h1>
+            <h1 className='title'>{data.normData.name} Average Price</h1>
+            <h1 className='title'>Per Category</h1>
           </div>
           <Bar 
-          data={mapdata(cat)} />
+          data={mapdata(data)} />
       </Segment>
     </div>
     )
@@ -102,7 +100,7 @@ const  ChartAverageBar = () =>{
       flexWrap:"wrap",
       justifyContent: "space-around",
       position: "relative",
-      height:"40vh", 
+      height:"40vh",
     }} >{mapCharts()}</div>
     </>
   )

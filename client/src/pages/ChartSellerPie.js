@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Pie} from "react-chartjs-2"
+import { Pie } from "react-chartjs-2"
 import { Segment } from "semantic-ui-react";
 
 const  ChartSellerPie = () =>{
@@ -12,8 +12,7 @@ const  ChartSellerPie = () =>{
 
   const getInfo = async () => {
     try {
-      let res = await axios.get("/api/sellers/chart_by_category")
-      console.log(res)
+      let res = await axios.get("/api/buyers/category")
       setInfo(normalizData(res.data))
     } catch (error) {
       console.log(error)
@@ -21,20 +20,20 @@ const  ChartSellerPie = () =>{
   }
   
   const normalizData = (data) => {
-    let cate = data.map((c) => c.category)
+    let cate = data.map((c) => c.desired_category)
     let unique_cate = [... new Set(cate)]
     return unique_cate.map((catego)=>{
-      let category_items = data.filter((c)=> c.category === catego )
-      let {category} = category_items[0]
+      let category_items = data.filter((c)=> c.desired_category === catego )
+      let {desired_category} = category_items[0]
       let nameData = []
       let countData = []
       let label = category_items.map((c)=>{
         let name = c.name 
         nameData.push(name)
-        let count = c.count
+        let count = c.desired_category_count
         countData.push(count)
       })
-      let normData = {category, nameData, countData}
+      let normData = {desired_category, nameData, countData}
       return{normData}
     })
   }
@@ -44,7 +43,6 @@ const  ChartSellerPie = () =>{
     labels: cat.normData.nameData,
     datasets: [
       {
-        label: '# of Votes',
         data: cat.normData.countData,
         backgroundColor: [
           'rgba(131, 188, 212, 0.2)',
@@ -77,14 +75,14 @@ const  ChartSellerPie = () =>{
   };
 
   const mapCharts = () =>{
-    return info.map((cat)=>{
-      console.log(cat);
+    return info.map((cat,index)=>{
       return(
-      <div>
+      <div key={index}>
         <Segment >
           <div className='header'>
-            <h1 className='title'>{cat.normData.category}</h1>
-            <h1 className='title'>By Seller</h1>
+            <h1 className='title'>Potential</h1>
+            <h1 className='title'>{cat.normData.desired_category}</h1>
+            <h3 className='title'>Buyers By Seller</h3>
           </div>
           <Pie 
           data={mapdata(cat)} />
@@ -102,7 +100,7 @@ const  ChartSellerPie = () =>{
       flexWrap:"wrap",
       justifyContent: "space-around",
       position: "relative",
-      height:"40vh", 
+      height:"50vh", 
     }} >{mapCharts()}</div>
     </>
   )
