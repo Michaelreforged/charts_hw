@@ -71,7 +71,7 @@ const  ChartBuyerLine = () =>{
     return info.map((cat)=>{
       console.log(cat);
       return(
-      <div>
+      <div style={{width:"25vw"}}>
         <Segment >
           <div className='header'>
             <h1 className='title'>{cat.normData.category}</h1>

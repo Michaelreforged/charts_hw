@@ -13,7 +13,6 @@ const  ChartsByCategory = () =>{
   const getInfo = async () => {
     try {
       let res = await axios.get("/api/sellers/chart_by_category")
-      console.log(res)
       setInfo(normalizData(res.data))
     } catch (error) {
       console.log(error)
@@ -78,9 +77,8 @@ const  ChartsByCategory = () =>{
 
   const mapCharts = () =>{
     return info.map((cat)=>{
-      console.log(cat);
       return(
-      <div>
+      <div style={{width:"25vw"}}>
         <Segment >
           <div className='header'>
             <h1 className='title'>{cat.normData.category}</h1>

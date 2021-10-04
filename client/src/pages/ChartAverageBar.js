@@ -43,7 +43,7 @@ const  ChartAverageBar = () =>{
     labels: data.normData.categoryData,
     datasets: [
       {
-        label: '# of Seller',
+        label: 'Average Price',
         data: data.normData.priceData,
         backgroundColor: [
           'rgba(131, 188, 212, 0.2)',
@@ -76,9 +76,9 @@ const  ChartAverageBar = () =>{
   };
 
   const mapCharts = () =>{
-    return info.map((data)=>{
+    return info.map((data, index)=>{
       return(
-      <div style={{width:"25vw"}}>
+      <div style={{width:"25vw"}} key={index}>
         <Segment >
           <div className='header'>
             <h1 className='title'>{data.normData.name} Average Price</h1>

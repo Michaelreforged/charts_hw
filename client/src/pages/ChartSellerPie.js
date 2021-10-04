@@ -77,7 +77,7 @@ const  ChartSellerPie = () =>{
   const mapCharts = () =>{
     return info.map((cat,index)=>{
       return(
-      <div key={index}>
+      <div key={index} style={{width:"25vw"}}>
         <Segment >
           <div className='header'>
             <h1 className='title'>Potential</h1>
